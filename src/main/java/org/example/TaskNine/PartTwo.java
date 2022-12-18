@@ -49,7 +49,6 @@ public class PartTwo {
 
     public static void main(String[] args) {
         try {
-            //2536
             File myObj = new File("src/main/resources/task_nine/" + "input");
             Scanner myReader = new Scanner(myObj);
 
@@ -62,22 +61,6 @@ public class PartTwo {
 
                 move(paces, direction);
 
-//                switch (direction) {
-//                    case "R":
-//                        moveRight(paces);
-//                        break;
-//                    case "L":
-//                        moveLeft(paces);
-//                        break;
-//                    case "U":
-//                        moveUp(paces);
-//                        break;
-//                    case "D":
-//                        moveDown(paces);
-//                        break;
-//                    default:
-//                        break;
-//                }
             }
 
             System.out.println(knotTailLocations);
@@ -203,117 +186,5 @@ public class PartTwo {
         headLocation = knotTailLocations.get(headIndex);
         tailLocation = knotTailLocations.get(tailIndex);
     }
-
-//    private static void moveRight(int paces) {
-//        for (int i = 0; i < paces; i++) {
-//            headIndex = 0;
-//            tailIndex = 1;
-//            for (int j = 0; j < knotTailLocations.size() - 1; j++) {
-//                headLocation = knotTailLocations.get(headIndex);
-//                tailLocation = knotTailLocations.get(tailIndex);
-//
-//                if (j == 0) {
-//                    headLocation = new Pair(headLocation.x, headLocation.y + 1);
-//                    knotTailLocations.set(headIndex, headLocation);
-//                }
-//
-//                if (!isTailNearHead()) {
-//                    moveTailNearHead();
-//                    knotTailLocations.set(tailIndex, tailLocation);
-//                }
-//                headIndex = headIndex + 1;
-//                tailIndex = tailIndex + 1;
-//            }
-//        }
-//        // reset head and tail
-//        headIndex = 0;
-//        tailIndex = 1;
-//        headLocation = knotTailLocations.get(headIndex);
-//        tailLocation = knotTailLocations.get(tailIndex);
-//    }
-//
-//    private static void moveUp(int paces) {
-//        for (int i = 0; i < paces; i++) {
-//            headIndex = 0;
-//            tailIndex = 1;
-//            for (int j = 0; j < knotTailLocations.size() - 1; j++) {
-//                headLocation = knotTailLocations.get(headIndex);
-//                tailLocation = knotTailLocations.get(tailIndex);
-//
-//                if (j == 0) {
-//                    headLocation = new Pair(headLocation.x - 1, headLocation.y);
-//                    knotTailLocations.set(headIndex, headLocation);
-//                }
-//
-//                if (!isTailNearHead()) {
-//                    moveTailNearHead();
-//                    knotTailLocations.set(tailIndex, tailLocation);
-//                }
-//                headIndex = headIndex + 1;
-//                tailIndex = tailIndex + 1;
-//            }
-//        }
-//        // reset head and tail
-//        headIndex = 0;
-//        tailIndex = 1;
-//        headLocation = knotTailLocations.get(headIndex);
-//        tailLocation = knotTailLocations.get(tailIndex);
-//    }
-//
-//    private static void moveLeft(int paces) {
-//        for (int i = 0; i < paces; i++) {
-//            headIndex = 0;
-//            tailIndex = 1;
-//            for (int j = 0; j < knotTailLocations.size() - 1; j++) {
-//                headLocation = knotTailLocations.get(headIndex);
-//                tailLocation = knotTailLocations.get(tailIndex);
-//
-//                if (j == 0) {
-//                    headLocation = new Pair(headLocation.x, headLocation.y - 1);
-//                    knotTailLocations.set(headIndex, headLocation);
-//                }
-//
-//                if (!isTailNearHead()) {
-//                    moveTailNearHead();
-//                    knotTailLocations.set(tailIndex, tailLocation);
-//                }
-//                headIndex = headIndex + 1;
-//                tailIndex = tailIndex + 1;
-//            }
-//        }
-//        // reset head and tail
-//        headIndex = 0;
-//        tailIndex = 1;
-//        headLocation = knotTailLocations.get(headIndex);
-//        tailLocation = knotTailLocations.get(tailIndex);
-//    }
-//
-//    private static void moveDown(int paces) {
-//        for (int i = 0; i < paces; i++) {
-//            headIndex = 0;
-//            tailIndex = 1;
-//            for (int j = 0; j < knotTailLocations.size() - 1; j++) {
-//                headLocation = knotTailLocations.get(headIndex);
-//                tailLocation = knotTailLocations.get(tailIndex);
-//
-//                if (j == 0) {
-//                    headLocation = new Pair(headLocation.x + 1, headLocation.y);
-//                    knotTailLocations.set(headIndex, headLocation);
-//                }
-//
-//                if (!isTailNearHead()) {
-//                    moveTailNearHead();
-//                    knotTailLocations.set(tailIndex, tailLocation);
-//                }
-//                headIndex = headIndex + 1;
-//                tailIndex = tailIndex + 1;
-//            }
-//        }
-//        // reset head and tail
-//        headIndex = 0;
-//        tailIndex = 1;
-//        headLocation = knotTailLocations.get(headIndex);
-//        tailLocation = knotTailLocations.get(tailIndex);
-//    }
 
 }

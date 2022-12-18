@@ -41,22 +41,7 @@ public class PartOne {
                 String direction = s[0];
                 int paces = Integer.parseInt(s[1]);
 
-                switch (direction) {
-                    case "R":
-                        moveRight(paces);
-                        break;
-                    case "L":
-                        moveLeft(paces);
-                        break;
-                    case "U":
-                        moveUp(paces);
-                        break;
-                    case "D":
-                        moveDown(paces);
-                        break;
-                    default:
-                        break;
-                }
+                move(paces, direction);
             }
 
             System.out.println(tailVisited);
@@ -131,36 +116,25 @@ public class PartOne {
      * (2, 0) (2, 1) (2, 2)
      */
 
-    private static void moveRight(int paces) {
+    private static void move(int paces, String direction) {
         for (int i = 0; i < paces; i++) {
-            headLocation = new Pair(headLocation.x, headLocation.y + 1);
-            if (!isTailNearHead()) {
-                moveTailNearHead();
+            switch (direction) {
+                case "R":
+                    headLocation = new Pair(headLocation.x, headLocation.y + 1);
+                    break;
+                case "L":
+                    headLocation = new Pair(headLocation.x, headLocation.y - 1);
+                    break;
+                case "U":
+                    headLocation = new Pair(headLocation.x - 1, headLocation.y);
+                    break;
+                case "D":
+                    headLocation = new Pair(headLocation.x + 1, headLocation.y);
+                    break;
+                default:
+                    break;
             }
-        }
-    }
 
-    private static void moveLeft(int paces) {
-        for (int i = 0; i < paces; i++) {
-            headLocation = new Pair(headLocation.x, headLocation.y - 1);
-            if (!isTailNearHead()) {
-                moveTailNearHead();
-            }
-        }
-    }
-
-    private static void moveUp(int paces) {
-        for (int i = 0; i < paces; i++) {
-            headLocation = new Pair(headLocation.x - 1, headLocation.y);
-            if (!isTailNearHead()) {
-                moveTailNearHead();
-            }
-        }
-    }
-
-    private static void moveDown(int paces) {
-        for (int i = 0; i < paces; i++) {
-            headLocation = new Pair(headLocation.x + 1, headLocation.y);
             if (!isTailNearHead()) {
                 moveTailNearHead();
             }
