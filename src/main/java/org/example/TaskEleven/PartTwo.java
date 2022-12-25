@@ -6,13 +6,16 @@ import java.util.*;
 
 public class PartTwo {
 
+    /**
+     * Helped: https://www.reddit.com/r/adventofcode/comments/zih7gf/2022_day_11_part_2_what_does_it_mean_find_another/izr79go/?context=3
+     */
     public static void main(String[] args) {
         try {
-            File myObj = new File("src/main/resources/task_eleven/" + "inputTest");
+            File myObj = new File("src/main/resources/task_eleven/" + "input");
             Scanner myReader = new Scanner(myObj);
 
             int monkeyId = -1;
-            List<Integer> items = new ArrayList<>();
+            List<Long> items = new ArrayList<>();
             String lValue = null;
             String rValue = null;
             char op = ' ';
@@ -34,7 +37,7 @@ public class PartTwo {
                     String repl = data.replace("  Starting items: ", "");
                     items = Arrays.stream(repl.split(","))
                             .map(item -> item.replace(" ", ""))
-                            .map(Integer::parseInt)
+                            .map(Long::parseLong)
                             .toList();
                 } else if (data.charAt(2) == 'O') {
                     String repl = data.replace("  Operation: new = ", "");
@@ -73,24 +76,28 @@ public class PartTwo {
             }
             myReader.close();
 
-            // 20 rounds
-            for (int r = 0; r < 20; r++) {
+            long divisibleTotal = monkeys.stream()
+                    .map(monkey -> monkey.worryDivisible)
+                    .reduce(1L, (a, b) -> a * b);
+
+            // 10 000 rounds
+            for (int r = 0; r < 10000; r++) {
 
                 for(int i = 0; i < monkeys.size(); i++) {
                     Monkey currentMonkey = monkeys.get(i);
 
-                    List<Integer> currentMonkeyItems = new ArrayList<>(currentMonkey.items);
+                    List<Long> currentMonkeyItems = new ArrayList<>(currentMonkey.items);
                     for(int j = 0; j < currentMonkeyItems.size(); j++) {
-                        Integer currentItem = currentMonkey.items.get(j);
+                        Long currentItem = currentMonkey.items.get(j);
 
-                        int worryLevel = currentMonkey.applyOperation(currentItem);
-                        int monkeyBoredWorryLevel = worryLevel / 3;
-                        int targetMonkeyId = currentMonkey.getTargetMonkeyId(monkeyBoredWorryLevel);
+                        long worryLevel = currentMonkey.applyOperation(currentItem);
+                        worryLevel = worryLevel % divisibleTotal;
+                        int targetMonkeyId = currentMonkey.getTargetMonkeyId(worryLevel);
 
                         for (Monkey monkey : monkeys) {
                             if (monkey.getId() == targetMonkeyId) {
-                                List<Integer> newItems = new ArrayList<>(monkey.items);
-                                newItems.add(monkeyBoredWorryLevel);
+                                List<Long> newItems = new ArrayList<>(monkey.items);
+                                newItems.add(worryLevel);
                                 monkey.items = newItems;
                                 break;
                             }
@@ -103,11 +110,10 @@ public class PartTwo {
                     }
 
                 }
-                System.out.println(monkeys);
-            }
 
-            monkeys.sort((o1, o2) -> o2.getInspectedAmount() - o1.getInspectedAmount());
-            System.out.println(monkeys);
+            }
+            monkeys.sort((o1, o2) -> (int) (o2.getInspectedAmount() - o1.getInspectedAmount()));
+
             System.out.println(monkeys.get(0).getInspectedAmount() * monkeys.get(1).getInspectedAmount());
 
         } catch (FileNotFoundException e) {
@@ -121,14 +127,14 @@ public class PartTwo {
         private final String lValue;
         private final String rValue;
         private final char op;
-        private final Integer worryDivisible;
+        private final long worryDivisible;
         private final int divisibleFalseMonkey;
         private final int divisibleTrueMonkey;
-        public List<Integer> items;
-        public int inspectedAmount = 0;
+        public List<Long> items;
+        public long inspectedAmount = 0;
 
         public Monkey(
-                List<Integer> items,
+                List<Long> items,
                 int id,
                 String lValue,
                 String rValue,
@@ -148,9 +154,9 @@ public class PartTwo {
             this.divisibleTrueMonkey = divisibleTrueMonkey;
         }
 
-        public int applyOperation(int valueOld) {
-            int l = this.lValue.equals("old") ? valueOld : Integer.parseInt(this.lValue);
-            int r = this.rValue.equals("old") ? valueOld : Integer.parseInt(this.rValue);
+        public long applyOperation(long valueOld) {
+            long l = this.lValue.equals("old") ? valueOld : Long.parseLong(this.lValue);
+            long r = this.rValue.equals("old") ? valueOld : Long.parseLong(this.rValue);
 
             return switch (this.op) {
                 case '*' -> l * r;
@@ -161,15 +167,15 @@ public class PartTwo {
             };
         }
 
-        public int getTargetMonkeyId(int playerWorryLevel) {
-            return playerWorryLevel % this.worryDivisible == 0 ? this.divisibleTrueMonkey : this.divisibleFalseMonkey;
+        public int getTargetMonkeyId(long playerWorryLevel) {
+            return playerWorryLevel % worryDivisible == 0 ? this.divisibleTrueMonkey : this.divisibleFalseMonkey;
         }
 
         public int getId() {
             return id;
         }
 
-        public int getInspectedAmount() {
+        public long getInspectedAmount() {
             return inspectedAmount;
         }
 
